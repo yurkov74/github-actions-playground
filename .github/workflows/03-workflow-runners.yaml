@@ -1,6 +1,6 @@
 name: 03 - Workflow Runners
 
-on: push
+on: workflow_dispatch
 
 jobs:
   ubuntu-echo:
@@ -9,7 +9,6 @@ jobs:
       - name: Show OS
         run: |
           echo "This job is running on an Ubuntu runner."
-          echo "Runner OS: ${{ runner.os }}"
           echo "Runner OS: ${RUNNER_OS}"
           cat /etc/os-release
 
@@ -19,7 +18,6 @@ jobs:
       - name: Show OS
         run: |
           echo "This job is running on a Windows runner."
-          echo "Runner OS: ${{ runner.os }}"
           echo "Runner OS: ${RUNNER_OS}"
           systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 
@@ -29,5 +27,4 @@ jobs:
       - name: Show OS
         run: |
           echo "This job is running on a macOS runner."
-          echo "Runner OS: ${{ runner.os }}"
           echo "Runner OS: ${RUNNER_OS}"
