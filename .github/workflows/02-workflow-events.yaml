@@ -3,7 +3,7 @@ name: 02 - Workflow Events
 on:
   pull_request:
   schedule:
-    - cron: '45 11 * * 0'  # Every Sunday at 11:45 AM
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 jobs:
