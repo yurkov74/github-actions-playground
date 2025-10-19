@@ -9,5 +9,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      - name: Printing Folders
-        run: find . -maxdepth 3
+      # - name: Printing Folders
+      #   run: find . -maxdepth 3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.19.5'
+      - name: Install Dependencies
+        working-directory: 04-using-actions/react-app
+        run: |
+          npm ci
