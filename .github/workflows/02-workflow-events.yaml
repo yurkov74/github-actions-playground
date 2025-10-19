@@ -1,7 +1,10 @@
 name: 02 - Workflow Events
 
 on:
-  push
+  pull_request:
+  schedule:
+    - cron: '45 11 * * 0'  # Every Sunday at 11:45 AM
+  workflow_dispatch:
 
 jobs:
   echo:
