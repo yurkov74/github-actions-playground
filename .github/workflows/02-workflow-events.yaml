@@ -11,4 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show the trigger
-        run: echo "Triggered by a ${GITHUB_EVENT_NAME} event."
+        run: |
+          echo "Triggered by a ${GITHUB_EVENT_NAME} event."
+          echo "I've been triggered by a(n) ${{ github.event_name }} event."
