@@ -6,9 +6,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04-using-actions/react-app
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # - name: Printing Folders
       #   run: find . -maxdepth 3
       - name: Setup Node
@@ -16,9 +19,9 @@ jobs:
         with:
           node-version: '20.19.5'
       - name: Install Dependencies
-        working-directory: 04-using-actions/react-app
+        # working-directory: 04-using-actions/react-app
         run: |
           npm ci
       - name: Run Unit Tests
-        working-directory: 04-using-actions/react-app
+        # working-directory: 04-using-actions/react-app
         run: npm run test
