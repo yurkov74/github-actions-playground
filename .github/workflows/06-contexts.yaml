@@ -2,9 +2,17 @@ name: 06 - Contexts
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+    inputs:
+      debug:
+        description: 'Enable debug mode'
+        type: boolean
+        required: false
+        default: false
+  # push:
+  #   branches:
+  #     - main
+
+run-name: "06 - Contexts | DEBUG - ${{ inputs.debug }}"
 
 jobs:
   echo-data:
