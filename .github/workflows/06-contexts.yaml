@@ -1,0 +1,29 @@
+name: 06 - Contexts
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  echo-data:
+    runs-on: ubuntu-latest
+    env:
+      MY_VAR: "Hello, World!"
+    steps:
+      - name: Display Information
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "Job: ${{ github.job }}"
+          echo "Run ID: ${{ github.run_id }}"
+          echo "Run Number: {{ github.run_number }}"
+          echo "Event Path: ${{ github.event_path }}"
+      - name: Retrieve Variable
+        run: |
+          echo "My custom variable: ${{ env.MY_VAR }}"
