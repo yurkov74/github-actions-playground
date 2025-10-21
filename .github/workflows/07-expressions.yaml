@@ -8,7 +8,9 @@ on:
         type: boolean
         required: false
         default: false
-  push:
+  # push:
+
+run-name: "07 - Using Expressions | DEBUG - ${{ inputs.debug == true && 'ON' || 'OFF' }}"
 
 jobs:
   echo:
