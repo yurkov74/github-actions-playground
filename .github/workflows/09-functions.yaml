@@ -19,14 +19,14 @@ jobs:
         # should execute only if any of the previous steps have failed
         if: ${{ failure() }}
         run: |
-          echo "I will print because a previous step has failed."
+          echo "I will print if any previous step has failed."
       - name: I will execute
         # should execute only if the workflow has not been cancelled
-        if: ${{ !github.workflow.canceled }}
+        if: ${{ !canceled() }}
         run: |
-          echo "I will print because the workflow was not cancelled."
+          echo "I will always print except when the workflow is cancelled."
       - name: I will execute when cancelled
         # should execute only when the workflow has been cancelled
-        if: ${{ github.workflow.canceled }}
+        if: ${{ canceled() }}
         run: |
-          echo "I will print because the workflow was cancelled."
+          echo "I will print if the workflow has been cancelled."
