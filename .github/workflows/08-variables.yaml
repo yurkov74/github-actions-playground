@@ -5,7 +5,7 @@ on:
 env:
   WORKFLOW_VAR: "I am a workflow env var"
   OVERWRITTEN: "I will be overwritten"
-  UNDEFINED_VAR_WITH_DEFAULT: "${{ vars.MY_REPO_VAR || 'Not set at repo level' }}"
+  UNDEFINED_VAR_WITH_DEFAULT: "${{ vars.UNDEFINED_VAR || 'Not set at repo level' }}" # default value if undefined
 jobs:
   echo:
     runs-on: ubuntu-latest

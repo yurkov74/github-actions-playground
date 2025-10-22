@@ -1,0 +1,32 @@
+name: 09 - Using Functions
+on:
+  workflow_dispatch:
+  # pull_request:
+jobs:
+  echo1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Failing step
+        run: |
+          echo "I will fail to demonstrate 'canceled' function"
+          exit 1
+      - name: I will be skipped
+        # echo "This step will be executed only if the previous step was successful"
+        if: ${{ success() }}
+        run: |
+          echo "I will print if previous steps succeed."
+      - name: I will execute
+        # should execute only if any of the previous steps have failed
+        if: ${{ failure() }}
+        run: |
+          echo "I will print because a previous step has failed."
+      - name: I will execute
+        # should execute only if the workflow has not been cancelled
+        if: ${{ !github.workflow.canceled }}
+        run: |
+          echo "I will print because the workflow was not cancelled."
+      - name: I will execute when cancelled
+        # should execute only when the workflow has been cancelled
+        if: ${{ github.workflow.canceled }}
+        run: |
+          echo "I will print because the workflow was cancelled."
