@@ -12,6 +12,7 @@ jobs:
       - name: Print PR labels
         if: ${{ github.event_name == 'pull_request' }}
         run: |
+          echo "PR Labels:"
           cat << EOF
           {{ toJson(github.event.pull_request.labels) }}
           EOF
