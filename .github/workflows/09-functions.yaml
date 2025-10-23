@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print PR title
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+        if: ${{ github.event_name == 'pull_request' }}
         run: echo "{{ $github.event.pull_request.title }}"
       - name: Print PR labels
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           cat << EOF
           {{ toJson(github.event.pull_request.labels) }}
