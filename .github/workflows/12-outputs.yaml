@@ -1,0 +1,27 @@
+name: 12 - Working with Outputs
+on:
+  workflow_dispatch:
+    inputs:
+      build-status:
+        description: "Simulate build status"
+        type: choice
+        options: ["success", "failure"]
+        default: "success"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      built-status-output: ${{ steps.build.outputs.status }}
+    steps:
+      - name: Print GITHUB_OUTPUT path
+        run: echo "GITHUB_OUTPUT is located at $GITHUB_OUTPUT"
+      - name: Build
+        id: build
+        run: echo "status=${{ inputs.build-status }}" >> $GITHUB_OUTPUT
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ needs.build.outputs.built-status-output == 'success' }}
+    steps:
+      - name: Deploy
+        run: echo "Deployment step executed because build was successful."
