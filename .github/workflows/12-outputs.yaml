@@ -20,11 +20,18 @@ jobs:
       - name: Build
         id: build
         run: |
+          # ! Note that $GITHUB_OUTPUT has different path than on previous step
+          echo "GITHUB_OUTPUT is located at $GITHUB_OUTPUT"
           echo "status=${{ inputs.build-status }}" >> $GITHUB_OUTPUT
           echo "output1=value1" >> $GITHUB_OUTPUT
           echo "output2=value2" >> $GITHUB_OUTPUT
+          echo "Content of GITHUB_OUTPUT after writing:"
           cat $GITHUB_OUTPUT
+      - name: Simulate Mistake
+        run: |
+          echo "output3='Correct line that will be overwritten by mistake'" >> "$GITHUB_OUTPUT"
           echo "mistake=true" > "$GITHUB_OUTPUT"
+          echo "Content of GITHUB_OUTPUT after next addition:"
           cat $GITHUB_OUTPUT
   deploy:
     needs: build
