@@ -1,0 +1,29 @@
+name: 13-caching.yaml
+on:
+  workflow_dispatch:
+    inputs:
+      use-cache:
+        description: 'Use cache?'
+        type: boolean
+        default: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sample-apps/react-app
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
+      - name: Testing
+        run: npm run test
+      - name: Building
+        run: npm run build
+      - name: Deploying to nonprod
+        run: echo "Deploying to nonprod environment"

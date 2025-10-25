@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: 04-using-actions/react-app
+        working-directory: sample-apps/react-app
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -19,9 +19,9 @@ jobs:
         with:
           node-version: '20.19.5'
       - name: Install Dependencies
-        # working-directory: 04-using-actions/react-app
+        # working-directory: sample-apps/react-app
         run: |
           npm ci
       - name: Run Unit Tests
-        # working-directory: 04-using-actions/react-app
+        # working-directory: sample-apps/react-app
         run: npm run test
