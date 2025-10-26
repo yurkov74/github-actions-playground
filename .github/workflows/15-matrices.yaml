@@ -3,16 +3,35 @@ on:
   workflow_dispatch:
 jobs:
   backwards-compatibility:
-    name: backwards-compatibility on ${{ matrix.operating-system }}/node v${{ matrix.node-version }}
-    runs-on: ubuntu-lates
+    name: Test Matrix [${{ matrix.os }}/node v${{ matrix.node-version }}]
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         node-version: ['18.x', '20.x', '21.x']
-        operating-system: [ubuntu-latest, windows-latest]
+        os:
+          - ubuntu-latest
+          - windows-latest
+        include:
+          - node-version: '16.x'
+            os: ubuntu-latest
+          - node-version: '21.x'
+            os: ubuntu-latest
+            tag: experimental
     steps:
       - name: Setup node
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Fail if experimental
+        if: ${{ matrix.tag == 'experimental' }}
+        run: |
+          echo "This is an experimental build"
+          exit 1
       - name: Perform some tests
-        run: echo "Running tests on OS ${{ matrix.operating-system }} and NodeJS ${{ matrix.node-version }}"
+        run: |
+          sleep 10
+          echo "Running tests on OS ${{ matrix.os }} and NodeJS ${{ matrix.node-version }}"
+      - name: Upload test results
+        run: |
+          echo "Uploading test results"
