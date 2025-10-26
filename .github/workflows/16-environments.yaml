@@ -1,0 +1,21 @@
+name: 16 - Working with Environments
+on:
+  workflow_dispatch:
+    inputs:
+      target-env:
+        type: environment
+        description: "Target Environment"
+        default: staging
+run-name: 16 - Working with Environments | env - ${{ github.event.inputs.target-env}}
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.target-env }}
+    env:
+      my-env-value: ${{ vars.OVERWRITTEN_VAR || 'default-value' }}
+      target-var: ${{ vars.TARGET_VAR || 'default target-var' }}
+    steps:
+      - name: Echo vars
+        run: |
+          echo "Env variable: ${{ env.my-env-value }}"
+          echo "Target variable: ${{ env.target-var }}"
