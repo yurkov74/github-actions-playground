@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 jobs:
   backwards-compatibility:
-    name: Test Matrix [${{ matrix.os }}/node v${{ matrix.node-version }}]
+    name: ${{ matrix.os }}/node v${{ matrix.node-version }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -35,3 +35,18 @@ jobs:
       - name: Upload test results
         run: |
           echo "Uploading test results"
+  include-example:
+    runs-on: ubuntu-latest
+    name: ${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}
+    strategy:
+      matrix:
+        color: [red, green, blue]
+        shape: [circle, square]
+        size: [small, large]
+        include:
+          - color: red
+            shape: triangle
+    steps:
+      - name: Dummy step
+        run: |
+          echo "Color: ${{ matrix.color }}, Shape: ${{ matrix.shape }}, Size: ${{ matrix.size }}"
