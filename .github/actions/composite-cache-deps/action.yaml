@@ -10,9 +10,6 @@ inputs:
     default: '.'
 runs:
   using: composite
-  env:
-    CACHE_PATH: ${{ inputs.working-dir }}/node_modules
-    LOCKFILE_PATH: ${{ inputs.working-dir }}/package-lock.json
   steps:
     - name: Setup NodeJS version ${{ inputs.node-version}}
       uses: actions/setup-node@v6
@@ -22,8 +19,8 @@ runs:
       id: cache
       uses: actions/cache@v4
       with:
-        path: ${{ env.CACHE_PATH }}
-        key: ${{ runner.os }}-node-${{ hashFiles(env.LOCKFILE_PATH) }}
+        path: ${{ inputs.working-dir }}/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles(inputs.working-dir + '/package-lock.json') }}
     - name: Install Dependencies
       if: ${{ steps.cache.outputs.cache-hit != 'true' }}
       working-directory: ${{ inputs.working-dir }}
