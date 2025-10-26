@@ -52,8 +52,14 @@ jobs:
           - color: red
             shape: triangle
           # - opacity: 60 # overrided capacity for all combinations from matrix, but not new combinations from include
+          - color: green
+            shape: circle
+            size: medium
+            opacity: 70
         exclude:
-          - opacity: 75
+          # - opacity: 75 # leads to the "Matrix exclude key 'opacity' does not match any key within the matrix" error
+          - color: green
+            shape: circle
     steps:
       - name: Dummy step
         run: |
