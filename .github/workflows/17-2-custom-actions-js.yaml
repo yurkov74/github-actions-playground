@@ -1,5 +1,6 @@
 name: 17 - 2 - Custom Actions - JS
-on: workflow_dispatch:
+on:
+  workflow_dispatch:
 run-name: 17 - 2 - Custom Actions - JS
 jobs:
   dependency-update:
