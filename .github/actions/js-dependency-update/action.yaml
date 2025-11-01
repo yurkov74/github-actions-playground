@@ -6,7 +6,7 @@ inputs:
     type: string
     required: false
     default: main
-  target-branch:
+  head-branch:
     description: "The branch from which the PR is created."
     type: string
     required: false

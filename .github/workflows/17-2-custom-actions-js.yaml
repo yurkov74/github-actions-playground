@@ -7,7 +7,7 @@ on:
         type: string
         required: false
         default: main
-      target-branch:
+      head-branch:
         description: "The branch from which the PR is created."
         type: string
         required: false
@@ -26,7 +26,7 @@ on:
         required: false
         default: true
 
-run-name: "17-2 ${{ inputs.base-branch }} -> ${{ inputs.target-branch }}, pwd: ${{ inputs.working-directory }}"
+run-name: "17-2 ${{ inputs.base-branch }} -> ${{ inputs.head-branch }}, pwd: ${{ inputs.working-directory }}"
 
 permissions:
   contents: write
@@ -44,7 +44,7 @@ jobs:
         uses: ./.github/actions/js-dependency-update
         with:
           base-branch: ${{ inputs.base-branch}}
-          target-branch: ${{ inputs.target-branch || 'update-dependencies'}}
+          head-branch: ${{ inputs.head-branch || 'update-dependencies'}}
           working-directory: ${{ inputs.working-directory}}
           gh-token: ${{ inputs.gh-token || secrets.GITHUB_TOKEN}}
           debug: ${{ inputs.debug || false }}
