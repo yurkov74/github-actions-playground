@@ -14,6 +14,7 @@ inputs:
   working-directory:
     description: "The working directory of the project to check for dependency updates."
     required: true
+    default: "./sample-apps/react-app"
   gh-token:
     description: "Authentication token with repository access. Must have write access to contents and pull-requests."
     required: true

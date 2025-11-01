@@ -27,6 +27,11 @@ on:
         default: true
 
 run-name: "17-2 ${{ inputs.base-branch }} -> ${{ inputs.target-branch }}, pwd: ${{ inputs.working-directory }}"
+
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   dependency-update:
     runs-on: ubuntu-latest
