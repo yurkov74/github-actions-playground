@@ -23,6 +23,11 @@ inputs:
     type: boolean
     required: false
     default: false
+outputs:
+  updates-available:
+    description: "Indicates whether dependency updates were found (true/false)."
+  pr-url:
+    description: "The URL of the created or updated pull request."
 runs:
   using: node20
   main: index.js

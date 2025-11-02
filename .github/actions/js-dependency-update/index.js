@@ -54,6 +54,9 @@ async function run() {
   const commonExecOpts = { cwd: workingDirectory };
   const logger = setupLogger({ debug: DEBUG, prefix: '[js-dependency-update]' });
 
+  let updatesAvailable = false;
+  let prUrl = '';
+
   core.setSecret(ghToken);
 
   // validate inputs
@@ -90,6 +93,8 @@ async function run() {
 
   if (!await gitStatusOutput) {
     logger.debug('No dependency updates found. Exiting.');
+    core.setOutput('updates-available', updatesAvailable)
+    core.setOutput('pr-url', prUrl);
     return;
   }
 
@@ -114,7 +119,7 @@ async function run() {
   const octokit = github.getOctokit(ghToken);
 
   try {
-    await octokit.rest.pulls.create({
+    let pr =await octokit.rest.pulls.create({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       title: 'chore (auto): update NPM dependencies',
@@ -122,11 +127,18 @@ async function run() {
       head: headBranch,
       base: baseBranch,
     });
+
+    updatesAvailable = true;
+    prUrl = pr.data.html_url;
+
+    logger.debug(`Pull request created: ${pr.data.html_url}`);
   } catch (e) {
     logger.error(`Failed to create pull request: ${e.message}`);
     core.setFailed(`[js-dependency-update] Failed to create pull request: ${e.message}`);
-    return;
   }
+
+  core.setOutput('updates-available', updatesAvailable);
+  core.setOutput('pr-url', prUrl);
 
 }
 

@@ -41,6 +41,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Check for dependency updates
+        id: js-dependency-update
         uses: ./.github/actions/js-dependency-update
         with:
           base-branch: ${{ inputs.base-branch}}
@@ -48,4 +49,7 @@ jobs:
           working-directory: ${{ inputs.working-directory}}
           gh-token: ${{ inputs.gh-token || secrets.GITHUB_TOKEN}}
           debug: ${{ inputs.debug || false }}
-
+      - name: Output Results
+        run: |
+          echo "Updates available: ${{ steps.js-dependency-update.outputs.updates-available }}"
+          echo "Pull Request URL: ${{ steps.js-dependency-update.outputs.pr-url }}"
