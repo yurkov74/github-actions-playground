@@ -10,6 +10,7 @@ on:
           - "https://www.google.com"
           - "https://www.github.com"
           - "https://nonexistent.example.com"
+          - "invalid-url.dskfjds09ufdsj"
       max_trials:
         default: '10'
         description: "Maximum number of trials until action fails"
@@ -24,6 +25,6 @@ jobs:
       - name: Ping UR
         uses: ./.github/actions/docker-ping-url
         with:
-          url: ${{ inputs.url }}
-          max_trials: ${{ inputs.max_trials }}
-          delay: ${{ inputs.delay }}
+          url: ${{ inputs.url }}  # -> INPUT_URL in action's environment
+          max_trials: ${{ inputs.max_trials }}  # -> INPUT_MAX_TRIALS in action's environment
+          delay: ${{ inputs.delay }}  # -> INPUT_DELAY in action's environment

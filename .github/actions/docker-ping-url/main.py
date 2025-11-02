@@ -15,16 +15,19 @@ def ping_url(
             if response.status_code == 200:
                 print(f"Success: Received 200 OK from {url}")
                 return True
-        except requests.RequestException as e:
-            print(f"Error: {e}")
-        sleep(delay)
+        except requests.ConnectionError as e:
+            print(f"{url} is unreachable. Retrying in {delay} seconds...")
+            sleep(delay)
+        except requests.exceptions.MissingSchema as e:
+            print(f"Invalid URL schema: {url}. Please check the URL format.")
+            return False
 
     print(f"Failed: Could not reach {url} after {max_trials} attempts.")
     return False
 
 
 def run() -> None:
-    url = os.getenv("INPUT_URL", "https://www.example.com")
+    url: str = os.getenv("INPUT_URL", "https://www.example.com")
     max_trials = int(os.getenv("INPUT_MAX_TRIALS", "10"))
     delay = int(os.getenv("INPUT_DELAY", "5"))
 
