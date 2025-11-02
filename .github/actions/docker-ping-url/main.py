@@ -16,14 +16,22 @@ def ping_url(
                 print(f"Success: Received 200 OK from {url}")
                 return True
         except requests.ConnectionError as e:
-            print(f"{url} is unreachable. Retrying in {delay} seconds...")
+            print(f"{url} is unreachable. Retrying in {delay} seconds...", e)
             sleep(delay)
         except requests.exceptions.MissingSchema as e:
-            print(f"Invalid URL schema: {url}. Please check the URL format.")
+            print(f"Invalid URL schema: {url}. Please check the URL format.", e)
             return False
 
     print(f"Failed: Could not reach {url} after {max_trials} attempts.")
     return False
+
+
+def set_output(file_path: str, key: str, value: str) -> None:
+    if not file_path:
+        raise ValueError("GITHUB_OUTPUT environment variable is not set.")
+    with open(file_path, "a") as f:
+        # f.write(f"{key}={value}\n")
+        print(f"{key}={value}", file=f)
 
 
 def run() -> None:
@@ -33,8 +41,10 @@ def run() -> None:
 
     res = ping_url(url, max_trials=max_trials, delay=delay)
 
+    set_output(os.getenv("GITHUB_OUTPUT", ""), "is_reachable", str(res).lower())
+
     if not res:
-        exit(1)
+        raise Exception(f"{url} is unreachable after maximum trials.")
 
 
 if __name__ == "__main__":

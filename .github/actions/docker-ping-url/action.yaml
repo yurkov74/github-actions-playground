@@ -10,6 +10,9 @@ inputs:
   delay:
     description: "Delay in seconds between trials"
     default: '5'
+outputs:
+  is_reachable:
+    description: "Whether the URL is reachable (HTTP 200) within the maximum trials"
 runs:
   using: "docker"
   image: "Dockerfile"

@@ -22,9 +22,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Ping UR
+      - name: Ping URL
+        id: ping-url
         uses: ./.github/actions/docker-ping-url
         with:
           url: ${{ inputs.url }}  # -> INPUT_URL in action's environment
           max_trials: ${{ inputs.max_trials }}  # -> INPUT_MAX_TRIALS in action's environment
           delay: ${{ inputs.delay }}  # -> INPUT_DELAY in action's environment
+      - name: Show Result
+        run: |
+          echo "${{ inputs.url }} is reachable: ${{ steps.ping-url.outputs.is_reachable }}"
