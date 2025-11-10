@@ -1,0 +1,31 @@
+name: 18 - 3 - Reusable Workflows
+on:
+  workflow_dispatch:
+    inputs:
+      e2e-mode:
+        description: 'Choose how many E2E tests to run'
+        required: false
+        type: choice
+        options:
+          - 'all'
+          - 'one'
+        default: 'one'
+jobs:
+  deploy:
+    uses: ./.github/workflows/18-1-reusable-workflows.yaml
+    with:
+      target-directory: "src/"
+  print-deployment-outputs:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print outputs
+        run: |
+          echo "Build status: ${{ needs.deploy.outputs.build-status }}"
+          echo "URL: ${{ needs.deploy.outputs.url }}"
+  e2e-tests:
+    uses: yurkov74/github-actions-playground-e2e/.github/workflows/e2e.yml@main
+    with:
+      mode: ${{ inputs.e2e-mode }}
+
+
