@@ -1,0 +1,14 @@
+{
+  "name": "js-safe-title-check",
+  "version": "1.0.0",
+  "description": "Safe Title Check Github action",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "1.10.1"
+  }
+}
